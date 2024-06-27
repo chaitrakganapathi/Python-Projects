@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate Platform</title>
+<link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <header class="header title-panel">
+        <h1 id="logo"> Real Estate Platform </h1>
+        <nav class="toplinks">
+            <a href="#" class="nlinks">Home</a>
+            <a href="#" class="nlinks">About us</a>
+            <a href="#" class="nlinks">Browse homes</a>
+            <a href="#" class="nlinks">Contact us</a>
+        </nav>
+
+    </header>
+<div class="back-container">
+    <div class="container">
+        <div class="side-bar">
+            <button onclick="showAddAgentForm()">Add Agent</button>
+            <button onclick="showAddHomeForm()">Add Home</button>
+            <button onclick="showMakeOwnerForm()" >Make Owner</button>
+            <button onclick="showMoveHomeForm()">From Sales To Owned</button>
+        </div>
+        <div class="predefined">
+        <form action="/preDefinedQuery" method="POST">
+            <label for="query">Choose a query:</label>
+            <select id="query" name="query">
+                <option value="">Select query</option>
+              <option value="q1">List all the homes owned by a given owner in a given city.</option>
+              <option value="q2">List all the homes that were sold more than once.</option>
+              <option value="q3">Find the most expensive home an owner ever bought.</option>
+              <option value="q4">Find all the homes that include all e appliances by the same maker.</option>
+              <option value="q5">Find owners who do not own the homes they used to own.</option>
+              <option value="q6">Find the total commissions earned by an agent. Assume that commission earned is on the purchased price of a home he/she sells. </option>
+              <option value="q7">Find people who own apartments as well as mansions. </option>
+              <option value="q8">List all the homes below a price in a given city.</option>
+              <option value="q9">List owners who own all the most expensive homes in a given city.</option>
+              <option value="q10">Find homes that up for sale in a given city that meet certain buyer choices.</option>
+            </select>
+            
+          </form>
+          <div id="form-container" class="hidden query-div">
+            <form id="dynamic-form" class="modal-content" method="POST">
+                <h2>I am Dynamic form</h2>
+            </form>
+        </div>
+        
+            
+        </div>
+
+    </div>
+</div>
+    
+    <!-- Add Agent Modal -->
+    <div class="modal" id="addAgentModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddAgentForm()">&times;</span>
+            <h2>Add Agent</h2>
+            <form action="/addAgent" method="POST" id="addAgentForm">
+                <label for="AgentID">AgentID:</label>
+                <input type="text" id="AgentID" name="AgentID" required><br>
+                <label for="Name">Name:</label>
+                <input type="text" id="Name" name="Name" required><br>
+                <label for="CommissionRate">CommissionRate:</label>
+                <input type="text" id="CommissionRate" name="CommissionRate" required><br>
+                <label for="Company">Company:</label>
+                <input type="text" id="Company" name="Company" required><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        
+    </div>
+
+    <!-- Add Home Modal -->
+    <div class="modal" id="addHomeModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddHomeForm()">&times;</span>
+            <h2>Add Home</h2>
+            <form action="/addHome" method="POST" id="addHomeForm">
+                <label for="homeAddress">Address:</label>
+                 <input type="text" id="homeAddress" name="homeAddress" required><br>
+                <label for="homeLocation">Location:</label>
+                 <input type="text" id="homeLocation" name="homeLocation" required><br>
+                <label for="homeType">Home Type:</label>
+                  <select id="homeType" name="homeType" required>
+                    <option value="Mansions">Mansions</option>
+                    <option value="Apartments">Apartments</option>
+                    <option value="Townhomes">Townhomes</option>
+                    <option value="Condos">Condos</option>
+                  </select><br>
+                <label for="homeYear">Year Built:</label>
+                 <input type="number" id="homeYear" name="homeYear" required><br>
+                <label for="homePrice">Price:</label>
+                 <input type="number" id="homePrice" name="homePrice" required><br>
+                <label for="floorSpace">Floor Space:</label>
+                 <input type="number" id="floorSpace" name="floorSpace" required><br>
+                <label for="floors">Floors:</label>
+                 <input type="number" id="floors" name="floors" required><br>
+                <label for="bedRooms">Bedrooms:</label>
+                 <input type="number" id="bedRooms" name="bedRooms" required><br>
+                <label for="bathRooms">Bathrooms:</label>
+                 <input type="number" id="bathRooms" name="bathRooms" required><br>
+                <label for="landSize">Land Size:</label>
+                 <input type="number" id="landSize" name="landSize" required><br>
+                <label for="homeId">Home ID:</label>
+                 <input type="number" id="homeId" name="homeId" required><br>
+                <label for="owner">Owner:</label>
+                 <input type="text" id="owner" name="owner" required><br>
+                <label for="preowned">Pre-owned:</label>
+                 <input type="number" id="preowned" name="preowned" required><br>
+                <label for="appliances">Appliances:</label>
+                 <input type="text" id="appliances" name="appliances" required><br>
+                <label for="city">City:</label>
+                 <input type="text" id="city" name="city" required><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+<!-- Form to move a home from "For Sale" to "Owned" -->
+<div class="modal" id="moveHomeModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeMoveHomeForm()">&times;</span>
+        <h2>Move Home to Owned</h2>
+        <form action="/move_from_sale_to_owned" method="POST" id="move_from_sale_to_ownedForm">
+            <label for="homeId">Home ID:</label>
+            <input type="number" id="homeId" name="homeId" required><br>
+            
+            <label for="owner">New Owner ID:</label>
+            <input type="text" id="owner" name="owner" required><br>
+
+            <label for="new_price">Price:</label>
+            <input type="text" id="new_price" name="new_price" required><br>
+            
+            <input type="submit" value="Move to Owned">
+        </form>
+    </div>
+</div>
+
+
+
+<!-- Make Owner Modal -->
+<div class="modal" id="makeOwnerModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeMakeOwnerForm()">&times;</span>
+        <h2>Make Owner</h2>
+        <form action="/make_home_owner" method="POST" id="make_home_ownerForm">
+            {% csrf_token %}
+            <label for="homeId">Home ID:</label>
+            <input type="number" id="homeId" name="homeId" required><br>
+
+            <label for="new_price">Price:</label>
+            <input type="text" id="new_price" name="new_price" required><br>
+
+            <label for="owner">New Owner ID:</label>
+            <input type="text" id="owner" name="owner" required><br>
+
+            <label for="ownername">New Owner Name:</label>
+             <input type="text" id="ownername" name="ownername" required><br>
+
+            <label for="owner_age">New Owner Age:</label>
+            <input type="number" id="owner_age" name="owner_age" required><br>
+
+            <label for="owner_profession">New Profession:</label>
+            <input type="text" id="owner_profession" name="owner_profession" required><br>
+
+            <input type="submit" value="Make Owner">
+        </form>
+    </div>
+</div>
+
+
+    <script>
+        const filterDropdown = document.getElementById('query');
+        
+        // Functions to show and close add agent form
+        function showAddAgentForm() {
+            document.getElementById("addAgentModal").style.display = "block";
+        }
+
+        function closeAddAgentForm() {
+            document.getElementById("addAgentModal").style.display = "none";
+        }
+
+
+        // Function to handle adding agent (console log for now)
+        function addAgent() {
+            var firstName = document.getElementById("agentFirstName").value;
+            var lastName = document.getElementById("agentLastName").value;
+            var phoneNumber = document.getElementById("agentPhoneNumber").value;
+            var age = document.getElementById("agentAge").value;
+            var gender = document.getElementById("agentGender").value;
+            var experience = document.getElementById("agentExperience").value;
+
+            console.log("Added Agent:");
+            console.log("First Name:", firstName);
+            console.log("Last Name:", lastName);
+            console.log("Phone Number:", phoneNumber);
+            console.log("Age:", age);
+            console.log("Gender:", gender);
+            console.log("Experience:", experience);
+
+            closeAddAgentForm();
+        }
+
+        // Functions to show and close add home form  
+        function showAddHomeForm() {
+            document.getElementById("addHomeModal").style.display = "block";
+        }
+
+        function closeAddHomeForm() {
+            document.getElementById("addHomeModal").style.display = "none";
+        }
+
+
+        // Function to handle adding home (console log for now)
+        function addHome() {
+            var address = document.getElementById("homeAddress").value;
+            var location = document.getElementById("homeLocation").value;
+            var type = document.getElementById("homeType").value;
+            var year = document.getElementById("homeYear").value;
+            var price = document.getElementById("homePrice").value;
+            var floorspace = document.getElementById("floorSpace").value;
+            var floors = document.getElementById("floors").value;
+            var bedrooms = document.getElementById("bedRooms").value;
+            var bathrooms = document.getElementById("bathRooms").value;
+            var homeid = document.getElementById("homeId").value;
+            var owner = document.getElementById("owner").value;
+            var preowned = document.getElementById("preowned").value;
+            var appliances = document.getElementById("appliances").value;
+            var city = document.getElementById("city").value;
+            var landsize = document.getElementById("landSize").value;
+
+
+
+
+            console.log("Added Home:");
+            console.log("Address:", address);
+            console.log("Location:", location);
+            console.log("Type:", type);
+            console.log("Year Built:", year);
+            console.log("Floor Space:", floorspace);
+            console.log("Floors:", floors);
+            console.log("Price:", price);
+            console.log("Bed Rooms:", bedrooms);
+            console.log("Bath Rooms:", bathrooms);
+            console.log("Home ID:", homeid);
+            console.log("Owner:", owner);
+            console.log("Preowned:", preowned);
+            console.log("Appliances:", appliances);
+            console.log("Land Size:", landsize);
+            console.log("City:", city);
+
+            closeAddHomeForm();
+        }
+        function showMoveHomeForm() {
+            document.getElementById("moveHomeModal").style.display = "block";
+        }
+
+        function closeMoveHomeForm() {
+            document.getElementById("moveHomeModal").style.display = "none";
+        }
+        
+        function move_from_sale_to_owned()
+        {
+        var homeid = document.getElementById("homeId").value;
+        var owner = document.getElementById("owner").value;
+        console.log("Home ID:", homeid);
+        console.log("Owner:", owner);
+        closeMoveHomeForm()
+        }
+         // Functions to show and close Make Owner form
+         function showMakeOwnerForm() {
+            document.getElementById("makeOwnerModal").style.display = "block";
+        }
+
+        function closeMakeOwnerForm() {
+            document.getElementById("makeOwnerModal").style.display = "none";
+        }
+
+        // Stub function for Make Owner action
+        function makeOwner() {
+            var homeId = document.getElementById("homeId").value;
+            var ownerId = document.getElementById("owner").value;
+
+            // Here you would typically send this data to the server to update the home's owner
+            console.log("Making owner:", ownerId, "for home ID:", homeId);
+
+            closeMakeOwnerForm();
+        }
+
+        
+
+
+
+        filterDropdown.addEventListener('change', function() {
+            const selectedFilter = this.value;
+            showDynamicForm(selectedFilter);
+        });
+
+        function showDynamicForm(selectedFilter) {
+            const formContainer = document.getElementById('form-container');
+            const dynamicForm = document.getElementById('dynamic-form');
+            // Hide the form container if no filter is selected
+            if (!selectedFilter) {
+                formContainer.classList.add('hidden');
+                return;
+            }
+            if (dynamicForm) {
+            // Clear any existing form fields
+                dynamicForm.innerHTML = '';
+            }
+            console.log("Selected filter", selectedFilter);
+            let htmlContent = '';
+            // Create form fields based on the selected filter
+            switch (selectedFilter) {
+                case 'q2':
+                    dynamicForm.action='/homes_sold_morethan_one_q2'
+                    htmlContent=`<h3>Click on submit to find homes sold more than once.</h3> <br> <form><input type="submit" value="Submit"></form>`
+                    break;
+                case 'q4':
+                    dynamicForm.action='/appliance_maker_q4'
+                    htmlContent=`<h3>Enter appliance maker and click on submit to find homes with that appliance</h3> <br> <form><input type="text" id="maker" name="maker"><input type="submit" value="Submit"></form>`
+                    break;
+                case 'q6':
+                    dynamicForm.action='/agent_commission_q6'
+                    htmlContent=`<h3>Enter agent id and click on submit to find commission for each agents</h3> <br> <form><input type="text" id="agentId" name="agentId"><input type="submit" value="Submit"></form>`
+                    break;
+                case 'q7':
+                    dynamicForm.action='/apartment_and_mansion_q7'
+                    htmlContent=
+                        `<h3>Click on submit to find owners who own apertments and mansion</h3> <br> <form><input type="submit" value="Submit"></form>`;
+                    break;
+
+                case 'q8':
+                dynamicForm.action='/home_lt_price_q8'
+                htmlContent=`<h3>Enter price and city name</h3><br>
+                <form><div class="form-grop">
+                    <label for="city">City:</label>
+                            <select name="city" id="city">
+                                <option value="">Any</option>
+                                <option value="Auburn Hills">Auburn Hills</option>
+                                <option value="Troy">Troy</option>
+                                <option value="Rochester">Rochester</option>
+                                <!-- Add more options if needed -->
+                            </select>
+
+                </div>
+                <div class="form-grop">
+                    <label for="price">Max Price:</label>
+                    <input type="text" id="price" name="price" required>
+                </div>
+                <input type="submit" value="Submit"></form>`
+                // Add cases for other filters as needed
+                break;
+                case 'q9':
+                    dynamicForm.action='/expensive_home_every_city_q9'
+                    htmlContent=
+                        `<h3>Click on submit to find all the expensive homes in all the cities</h3> <br> <form><input type="submit" value="Submit"></form>`;
+                    break;
+                case 'q10':
+                    dynamicForm.action='/filter_homes'
+                    htmlContent = `<div id="homefilter">
+                        <form method="POST" id="filterHomeForm">
+                            <div class="form-grop">
+                            <label for="bedrooms">Bedrooms:</label>
+                            <select name="bedrooms" id="bedrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="bathrooms">Bathrooms:</label>
+                            <select name="bathrooms" id="bathrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="max-price">Max Price in $:</label>
+                            <select name="max-price" id="max-price">
+                                <option value="">Any</option>
+                                <option value="100000">100000</option>
+                                <option value="200000">200000</option>
+                                <option value="300000">300000</option>
+                                <option value="400000">400000</option>
+                                <option value="500000">500000</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="home-type">Home Type:</label>
+                            <select name="home-type" id="home-type">
+                                <option value="">Any</option>
+                                <option value="Single Family">Single Family</option>
+                                <option value="Apartment">Apartment</option>
+                                <option value="Condo">Condo</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="city">City:</label>
+                            <select name="city" id="city">
+                                <option value="">Any</option>
+                                <option value="Auburn Hills">Auburn Hills</option>
+                                <option value="Troy">Troy</option>
+                                <option value="Rochester">Rochester</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                `
+                    break;
+                case 'q5':
+                    dynamicForm.action='/find_owners_q5'
+                    htmlContent=
+                        `<h3>Click on submit to find owners who do not own homes they previously owned</h3> <br> <form><input type="submit" value="Submit"></form>`;
+                    break;
+
+                case 'q1':
+                dynamicForm.action='/list_homes_owned_by_owner_in_city'
+                htmlContent=`<h3>Enter owner name and city name</h3><br>
+                <form><div class="form-grop">
+                    <label for="city">City:</label>
+                            <select name="city" id="city">
+                                <option value="">Any</option>
+                                <option value="Auburn Hills">Auburn Hills</option>
+                                <option value="Troy">Troy</option>
+                                <option value="Rochester">Rochester</option>
+                                <!-- Add more options if needed -->
+                            </select>
+
+                </div>
+                <div class="form-grop">
+                    <label for="owner">Owner:</label>
+                    <input type="text" id="owner" name="owner" required>
+                </div>
+                <input type="submit" value="Submit"></form>`
+                // Add cases for other filters as needed
+                break;
+
+                case 'q3':
+                dynamicForm.action='/expensive_home_q3'
+                htmlContent=`<h3>Click on submit to find most expensive homes</h3> <br> <form><input type="submit" value="Submit"></form>`
+                break;
+            }
+
+            if (dynamicForm) {
+                dynamicForm.innerHTML = htmlContent;
+            } else {
+                console.error("Target element not found.");
+            }
+
+            // Show the form container
+            formContainer.classList.remove('hidden');
+        }
+        
+    </script>
+</body>
+</html>

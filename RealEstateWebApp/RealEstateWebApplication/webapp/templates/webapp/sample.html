@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real Estate Website</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <style>
+      html {
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      }
+      body {
+        background-image:url("../static/images/property_1-min.jpg");
+        background-repeat: no-repeat;
+        background-color: #cccccc;
+          height: 500px;
+        background-position: center;
+        background-size: cover;
+        position: fixed;
+          margin-top: 100px;
+}
+
+
+      p {
+      font-size: 12px;
+      }
+      hr {
+      color: #a9a9a9;
+      opacity: 0.3;
+      }
+
+      .main-block {
+      max-width: 750px;
+      min-height: 460px;
+      padding: 10px 0;
+      margin: auto;
+      border-radius: 5px;
+      border: solid 1px #ccc;
+      box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+      #background: rgba(255, 121, 242, 0.4);
+          background: rgba(255,105,180, 0.4);
+          box-shadow: #333333;
+
+      }
+
+      .side-block {
+        max-width: 750px;
+        min-height: 460px;
+        padding: 10px 0;
+        margin: auto;
+        border-radius: 5px;
+        border: solid 1px #ccc;
+        box-shadow: 1px 2px 5px rgba(0,0,0,.31);
+        #background: rgba(156, 197, 110, 0.4);
+            background: rgba(156, 197, 110, 0.4);
+            box-shadow: #333333;
+  
+        }
+
+        .mainheading {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            text-align: center;
+            font-family: Georgia, "Times New Roman", Times, serif;
+            color: #000000;
+           opacity: 1;
+        }
+
+      div, h1, form, input, p {
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-size: 16px;
+      color: #000000;
+           opacity: 1;
+
+      }
+      h1 {
+      padding: 10px 0;
+      font-size: 32px;
+      font-weight: 300;
+      text-align: center;
+      }
+      form {
+      margin: 0 30px;
+      }
+
+      input[type=radio] {
+      display: none;
+      }
+
+      label {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 18px;
+    color: #333;
+    height: 20px;
+    width: 200px;
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: right;
+    margin-right:15px;
+    float:left;
+          color: #000000;
+          opacity: 1;
+}
+
+
+      input[type=text], input[type=password] {
+      width: 150px;
+      height: 36px;
+      margin: 13px 0 0 -5px;
+      padding-left: 10px;
+      border-radius: 0 5px 5px 0;
+      border: solid 1px #cbc9c9;
+      box-shadow: 1px 2px 5px rgba(0,0,0,.09);
+      background: #fff;
+          color: #000000;
+          opacity: 1;
+      }
+
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 200px;
+      padding: 10px 0;
+      margin: 10px auto;
+      border-radius: 5px;
+      border: none;
+      background: #1c87c9;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      }
+      button:hover {
+      background: #66CDAA;
+      }
+      .account-type, .output {
+      margin: 15px 0;
+          max-width:750px;
+          min-height: 0px;
+          background: #1c87c9;
+            font-size: 22px;
+          color: #f1f1f1;
+          margin: 10px auto;
+          text-align: center;
+          padding: 0px 0;
+          border-radius: 5px;
+          border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="mainheading">
+        <p><span style="color:#cccc33;"><span style="font-size:36px;"><span style="background-color:#663333;">Real Estate Website</span></span></span></p>
+    </h1>
+    <hr />
+    <div class="side-block">
+        <form action="/form_diagnosis" method="post" class="container">
+            <div class="form-grop">
+              <label for="Agent">Agent:</label>
+              <input id="agent" name="agent" type="text" />
+            </div>
+          <div class="form-grop">
+              <label for="Owner">Owner:</label>
+              <input id="owner" name="owner" type="text" />
+          </div>
+            <div class="form-grop">
+              <label for="Price">Price</label>
+              <input id="price" name="price" type="text" />
+            </div>
+            <div class="form-grop">
+              <label for="City">City:</label>
+               <input id="city" name="city" type="text" />
+            </div>
+            <div class="form-grop">
+              <label for="HomeType">Home Type:</label>
+              <input id="hometype" name="hometype" type="text" />
+            </div>
+  
+          <div class="btn-block">
+            <p>By clicking submit, details will be fetched from database</a>.</p>
+            <button type="submit" href="/">Submit</button>
+          </div>
+             <div class="output">
+            <hr for="result">{{ info }}</hr>
+          </div>
+        </form>
+    </div>
+    <div class="main-block">
+      <h2>Output will be displayed here</h2>
+    </div>
+
+  </body>
+</html>

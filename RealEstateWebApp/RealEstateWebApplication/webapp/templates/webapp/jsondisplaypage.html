@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display JSON Data</title>
+</head>
+<body>
+    <h1>JSON Data from MongoDB</h1>
+    <a href="{% url 'home' %}">Home</a>
+    <ul>
+        {% for document in documents %}
+            <li>
+                <!-- Display document fields -->
+                <strong>Floor Space:</strong> {{ document.floorSpace}}<br>
+                <strong>Floors:</strong> {{ document.floors}}<br>
+                <strong>Bedrooms:</strong> {{ document.bedRooms}}<br>
+                <strong>Bathrooms:</strong> {{ document.bathRooms}}<br>
+                <strong>Land Size:</strong> {{ document.landSize}}<br>
+                <strong>Year Constructed:</strong> {{ document.yearConstructed}}<br>
+                <strong>Home ID:</strong> {{ document.homeId }}<br>
+                <strong>Home Price:</strong> {{ document.price }}<br>
+                <strong>Home Type:</strong> {{ document.htype }}<br>
+                <strong>City:</strong> {{ document.city}}<br>
+                <strong>Preowned:</strong> {{ document.preowned }}<br>
+                <strong>Appliances:</strong> {{ document.appliances}}<br>
+
+            </li>
+        {% endfor %}
+    </ul>
+
+    <ul>
+        {% for owner in owners %}
+            <li>
+                <!-- Display document fields -->
+                <strong>Floor Space:</strong> {{ owner.floorSpace}}<br>
+                <strong>Floors:</strong> {{ owner.floors}}<br>
+                <strong>Bedrooms:</strong> {{ owner.bedRooms}}<br>
+                <strong>Bathrooms:</strong> {{ owner.bathRooms}}<br>
+                <strong>Land Size:</strong> {{ owner.landSize}}<br>
+                <strong>Year Constructed:</strong> {{ owner.yearConstructed}}<br>
+                <strong>Home ID:</strong> {{ owner.homeId }}<br>
+                <strong>Home Price:</strong> {{ owner.price }}<br>
+                <strong>Home Type:</strong> {{ owner.htype }}<br>
+                <strong>Owner:</strong> {{ owner.owner }}<br>
+                <strong>City:</strong> {{ owner.city}}<br>
+                <strong>Preowned:</strong> {{ owner.preowned }}<br>
+                <strong>Appliances:</strong> {{ owner.appliances}}<br>
+
+            </li>
+        {% endfor %}
+    </ul>
+
+    
+    <ul>
+        {% for message in messages %}
+           
+                <!-- Display document fields -->
+            <h2>{{message}}</h2>
+
+           
+        {% endfor %}
+    </ul>
+
+    <h3>
+        {{result}}
+    </h3>
+
+    <h3>Owners who do not own homes they previously owned:</h3>
+    <div id="output">
+        {% for key, value in dict.items %}
+            <p>{{ key }}: {{ value }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
